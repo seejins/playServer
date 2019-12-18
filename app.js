@@ -29,11 +29,22 @@ app.get('/playstore', (req, res) => {
     }
 
     let results = playstore
-        .filter(apps =>
-            apps
-                .Genres
-                .toLowerCase()
-                .includes(genres.toLowerCase()))
+
+    if (!genres) {
+        results = playstore
+    } 
+    
+    if (genres) { 
+        results = playstore
+            .filter(apps =>
+                apps
+                    .Genres
+                    .toLowerCase()
+                    .includes(genres.toLowerCase()))
+    }
+    
+
+    
 
     if (sort) {
         results.sort((a, b) => {
@@ -44,6 +55,4 @@ app.get('/playstore', (req, res) => {
     res.json(results)
 })
 
-app.listen(8000, () => {
-    console.log('Server started on port 8000')
-})
+module.exports = app
